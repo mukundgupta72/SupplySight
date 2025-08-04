@@ -8,6 +8,7 @@ import {
 
 const router = express.Router();
 
+
 router.get('/', getDemandStats);
 router.post('/order', recordOrder);
 router.get('/history', getOrderHistory);
