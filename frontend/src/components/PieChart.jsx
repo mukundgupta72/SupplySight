@@ -7,6 +7,7 @@ const PieChart = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
+    
     <ResponsivePie
       data={data}
       theme={{
