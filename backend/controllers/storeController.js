@@ -1,7 +1,7 @@
 // controllers/storeController.js
 import Store from '../models/Store.js';
 import Item from '../models/Item.js';
-import User from '../models/User.js';
+// import User from '../models/User.js';
 
 // @desc    Get a single store by its ID, with fully detailed inventory
 export const getStoreById = async (req, res) => {

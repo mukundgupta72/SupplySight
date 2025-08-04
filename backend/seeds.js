@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Item from './models/Item.js';
 import Store from './models/Store.js';
-import User from './models/user.js';
+import User from './models/User.js';
 import bcrypt from 'bcryptjs';
 
 dotenv.config();
