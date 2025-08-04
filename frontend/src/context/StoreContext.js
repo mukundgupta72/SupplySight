@@ -5,6 +5,9 @@ import { useAuth } from './AuthContext';
 
 const StoreContext = createContext(null);
 
+// Backend URL
+const API_BASE_URL = 'https://supplysight-poi2.onrender.com';
+
 export const StoreProvider = ({ children }) => {
   const { user } = useAuth();
   const [stores, setStores] = useState([]);
@@ -13,11 +16,10 @@ export const StoreProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // ... (rest of the file is the same)
   const fetchStores = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5001/api/stores');
+      const res = await axios.get(`${API_BASE_URL}/api/stores`);
       setStores(res.data);
     } catch (err) {
       console.error("Error fetching stores:", err.response ? err.response.data : err.message);
@@ -30,7 +32,7 @@ export const StoreProvider = ({ children }) => {
     if (!user || user.role !== 'owner') return;
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5001/api/stores/mystores');
+      const res = await axios.get(`${API_BASE_URL}/api/stores/mystores`);
       setMyStores(res.data);
     } catch (err) {
       console.error("Error fetching my stores:", err.response ? err.response.data : err.message);
@@ -41,7 +43,7 @@ export const StoreProvider = ({ children }) => {
   
   const addStore = async (storeData) => {
     try {
-      await axios.post('http://localhost:5001/api/stores', storeData);
+      await axios.post(`${API_BASE_URL}/api/stores`, storeData);
       fetchMyStores();
     } catch (err) {
       console.error("Error adding store:", err.response ? err.response.data : err.message);
@@ -50,16 +52,16 @@ export const StoreProvider = ({ children }) => {
 
   const removeStore = async (storeId) => {
     try {
-        await axios.delete(`http://localhost:5001/api/stores/${storeId}`);
-        fetchMyStores();
+      await axios.delete(`${API_BASE_URL}/api/stores/${storeId}`);
+      fetchMyStores();
     } catch (err) {
-        console.error("Error removing store:", err.response ? err.response.data : err.message);
+      console.error("Error removing store:", err.response ? err.response.data : err.message);
     }
   };
 
   const updateInventory = async (storeId, newInventory) => {
     try {
-      await axios.put(`http://localhost:5001/api/stores/${storeId}/inventory`, { inventory: newInventory });
+      await axios.put(`${API_BASE_URL}/api/stores/${storeId}/inventory`, { inventory: newInventory });
       return true;
     } catch (err) {
       console.error("Error updating inventory:", err.response ? err.response.data : err.message);
@@ -69,13 +71,13 @@ export const StoreProvider = ({ children }) => {
   
   const addToCart = (item, quantity, store) => {
     const itemToAdd = {
-        sku: item.sku,
-        name: item.name || item.sku,
-        price: item.price || 0,
-        quantity: quantity,
-        storeId: store._id,
-        storeName: store.name,
-        ownerName: store.owner.name,
+      sku: item.sku,
+      name: item.name || item.sku,
+      price: item.price || 0,
+      quantity: quantity,
+      storeId: store._id,
+      storeName: store.name,
+      ownerName: store.owner.name,
     };
   
     setCart((prevCart) => {
@@ -95,12 +97,12 @@ export const StoreProvider = ({ children }) => {
 
   const confirmOrder = async () => {
     if (cart.length === 0) {
-        console.log("Cart is empty. Cannot confirm order.");
-        return;
+      console.log("Cart is empty. Cannot confirm order.");
+      return;
     }
 
     try {
-      await axios.post('http://localhost:5001/api/stores/order', { cart });
+      await axios.post(`${API_BASE_URL}/api/stores/order`, { cart });
 
       const newOrder = {
         id: new Date().getTime(),
@@ -113,14 +115,14 @@ export const StoreProvider = ({ children }) => {
       setCart([]);
 
       if (user?.role === 'owner') {
-          fetchMyStores();
+        fetchMyStores();
       } else {
-          fetchStores();
+        fetchStores();
       }
 
     } catch (err) {
-        console.error("Failed to confirm order:", err.response ? err.response.data : err.message);
-        alert("There was an error placing your order. Please try again.");
+      console.error("Failed to confirm order:", err.response ? err.response.data : err.message);
+      alert("There was an error placing your order. Please try again.");
     }
   };
 

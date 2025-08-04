@@ -16,10 +16,11 @@ const server = http.createServer(app);
 // Initialize Socket.IO and attach it to the server
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5000", // FIX: Changed port from 3000 to 5000
+    origin: [process.env.FRONTEND_URL || "http://localhost:5000"],
     methods: ["GET", "POST"]
   }
 });
+
 
 io.on('connection', (socket) => {
   console.log('✅ A user connected via WebSocket');

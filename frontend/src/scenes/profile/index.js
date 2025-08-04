@@ -6,14 +6,15 @@ import { useAuth } from '../../context/AuthContext';
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
+const API_BASE_URL = 'https://supplysight-poi2.onrender.com';
+
 const Profile = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { user } = useAuth(); // Removed unused 'login'
+  const { user } = useAuth();
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
 
-  // ... (rest of the file is the same)
   const onFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -29,14 +30,14 @@ const Profile = () => {
     formData.append('profilePic', file);
 
     try {
-      const res = await axios.post('http://localhost:5001/api/upload', formData, {
+      const res = await axios.post(`${API_BASE_URL}/api/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
       const { filePath } = res.data;
-      const updateRes = await axios.put('http://localhost:5001/api/auth/profilepic', { profilePicPath: filePath });
+      const updateRes = await axios.put(`${API_BASE_URL}/api/auth/profilepic`, { profilePicPath: filePath });
       const { token } = updateRes.data;
       localStorage.setItem('token', token);
       window.location.reload();
@@ -55,7 +56,7 @@ const Profile = () => {
       <Box display="flex" flexDirection="column" alignItems="center">
         <Avatar
           alt={user?.name}
-          src={user?.profilePic ? `http://localhost:5001${user.profilePic}` : `../../assets/user.png`}
+          src={user?.profilePic ? `${API_BASE_URL}${user.profilePic}` : `../../assets/user.png`}
           sx={{ width: 150, height: 150, mb: 3 }}
         />
         <Typography variant="h3">{user?.name}</Typography>
