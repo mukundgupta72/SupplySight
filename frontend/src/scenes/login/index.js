@@ -61,7 +61,7 @@ const Login = () => {
             color={colors.grey[100]}
             textAlign="center"
           >
-            Welcome Back
+            Welcome
           </Typography>
           <Typography
             variant="h5"

@@ -5,7 +5,8 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
 // Set backend URL
-const API_BASE_URL = 'https://supplysight-poi2.onrender.com';
+// const API_BASE_URL = 'https://supplysight-poi2.onrender.com';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001';
 
 const setAuthToken = (token) => {
   if (token) {

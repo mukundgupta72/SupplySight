@@ -6,7 +6,8 @@ import { useAuth } from '../../context/AuthContext';
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
-const API_BASE_URL = 'https://supplysight-poi2.onrender.com';
+// const API_BASE_URL = 'https://supplysight-poi2.onrender.com';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001';
 
 const Profile = () => {
   const theme = useTheme();

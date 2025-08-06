@@ -94,7 +94,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                     height="100px"
                     src={
                       user?.profilePic
-                        ? `http://localhost:5001${user.profilePic}`
+                        ? `${process.env.REACT_APP_BACKEND_URL}${user.profilePic}`
                         : `../../assets/user.png`
                     }
                     style={{ cursor: "pointer", borderRadius: "50%" }}

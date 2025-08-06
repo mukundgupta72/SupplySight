@@ -13,8 +13,9 @@ const NotificationHandler = () => {
     if (user?.role !== 'owner') {
       return;
     }
-
-    const socket = io('https://supplysight-poi2.onrender.com');
+    const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001';
+    const socket = io(API_BASE_URL);
+    // const socket = io('https://supplysight-poi2.onrender.com');
     // const socket = io('http://localhost:5001');
 
     socket.on('connect', () => {

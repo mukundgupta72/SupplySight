@@ -46,7 +46,7 @@ mongoose
     scheduler.init(io);
 
     server.listen(PORT, () => {
-      console.log(`🚀 Server with WebSocket running at http://localhost:${PORT}`);
+      console.log(`🚀 Server with WebSocket running...`);
     });
   })
   .catch((err) => {

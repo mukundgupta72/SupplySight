@@ -6,7 +6,8 @@ import { useAuth } from './AuthContext';
 const StoreContext = createContext(null);
 
 // Backend URL
-const API_BASE_URL = 'https://supplysight-poi2.onrender.com';
+// const API_BASE_URL = 'https://supplysight-poi2.onrender.com';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001';
 
 export const StoreProvider = ({ children }) => {
   const { user } = useAuth();
